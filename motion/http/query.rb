@@ -67,7 +67,7 @@ Cache policy: #{@cache_policy}, response: #{@response.inspect} >"
     # On OSX, if using an FTP connection, this method will fire *immediately* after creating an
     # NSURLConnection, even if the connection has not yet started. The `response`
     # object will be a NSURLResponse, *not* an `NSHTTPURLResponse`, and so will start to crash.
-    if App.osx? && !response.is_a?(NSHTTPURLResponse)
+    if !response.is_a?(NSHTTPURLResponse)
       return
     end
     @status_code = response.statusCode
@@ -149,9 +149,7 @@ Cache policy: #{@cache_policy}, response: #{@response.inspect} >"
 
   private
   def show_status_indicator(show)
-    if App.ios?
-      UIApplication.sharedApplication.networkActivityIndicatorVisible = show
-    end
+    UIApplication.sharedApplication.networkActivityIndicatorVisible = show
   end
 
   def create_request
